@@ -7,17 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="http://js.arcgis.com/3.39/esri/css/esri.css" />
     <script src="https://js.arcgis.com/3.39/"></script>
-
-    <script>
-        var map;
-        require(["esri/map", "dojo/domReady!"], function(Map) {
-            map = new Map("mapDiv", {
-                basemap: "topo",
-                center: [17.923597762, 60.208251508],
-                zoom: 10
-            });
-        });
-    </script>
+    <script src="script.js"></script>
 </head>
 <body>
     <div id="mapDiv"></div>
