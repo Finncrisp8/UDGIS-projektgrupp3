@@ -1,26 +1,33 @@
-    var map;
-    require(["esri/map", 
-    "esri/map",
-    "esri/layers/ArcGISDynamicMapServiceLayer",
-    "dojo/domReady!"], function(Map, ArcGISDynamicMapServiceLayer) {
-        map = new Map("mapDiv", {
-            basemap: "topo",
-            center: [17.923597762, 60.208251508],
-            zoom: 10
+
+    require([
+        "esri/map",
+        "esri/symbols/SimpleMarkerSymbol",
+        "esri/graphic",
+        "esri/layers/GraphicsLayer",
+        "esri/InfoTemplate",
+        "esri/geometry/Point",
+        "dojo/_base/Color",
+        "dojo/domReady!"
+      ], function(Map, SimpleMarkerSymbol, Graphic, GraphicsLayer, InfoTemplate, Point, Color) {
+        var map = new Map("mapDiv", {
+          basemap: "topo",
+          center: [17.923597762, 60.208251508],
+          zoom: 10
         });
+      
+        var graphicsLayer = new GraphicsLayer();
+        map.addLayer(graphicsLayer);
+      
+        var simpleMarkerSymbol = new SimpleMarkerSymbol();
+        simpleMarkerSymbol.setStyle(SimpleMarkerSymbol.STYLE_CIRCLE);
+        simpleMarkerSymbol.setSize(16);
+        simpleMarkerSymbol.setColor(new Color([255, 0, 0, 0.51]));
+      
+        var graphic = new Graphic(
+          new Point(17.923597762, 60.208251508),
+          simpleMarkerSymbol
+        ).setInfoTemplate(new InfoTemplate("Test"));
+        graphicsLayer.add(graphic);
+      });
+      
 
-        var CanoeLayer = new ArcGISDynamicMapServiceLayer();
-
-        var BikeLayer = new ArcGISDynamicMapServiceLayer();
-
-        var WalkLayer = new ArcGISDynamicMapServiceLayer();
-
-        map.addLayer(CanoeLayer);
-        map.addLayer(BikeLayer);
-        map.addLayer(WalkLayer);
-
-        CanoeLayer.setOpacity(1);
-        BikeLayer.setOpacity(1);
-        WalkLayer.setOpacity(1);
-
-    });
