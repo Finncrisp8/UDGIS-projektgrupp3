@@ -14,20 +14,20 @@ require([
     const view = new MapView({
         container: "viewDiv",
         map: map,
-        center: [17.923597762, 60.208251508], // Longitude, latitude
+        center: [17.923597762, 60.208251508], 
         zoom: 10
     });
 
-    // Function to convert JSON data to Polyline geometry
+    
     function convertToPolyline(jsonData) {
         const paths = jsonData.posts.map(post => [parseFloat(post.longitude), parseFloat(post.latitude)]);
         return new Polyline({
             paths: [paths],
-            spatialReference: { wkid: 4326 } // WGS84
+            spatialReference: { wkid: 4326 } 
         });
     }
     
-    // Define arrays to hold feature layers for each trail type
+    
     const trailLayers = {
         "Vandringsleder": [],
         "Cykelleder": [],
@@ -60,7 +60,7 @@ require([
                     visible: false
                 });
 
-                // Add the feature layer to the corresponding array based on its type
+                
                 trailLayers[type].push(trailLayer);
 
                 map.add(trailLayer);
@@ -68,27 +68,27 @@ require([
             .catch(error => console.error('Error fetching JSON:', error));
     }
 
-    // Add trail layers
-    addTrailLayer("Biking_walking_no_elevation/Etapp_11_wgs84.json", "Vandringsled 1", [0, 0, 255], "Vandringsleder"); // Blue color
-    addTrailLayer("Biking_walking_no_elevation/Etapp_12_wgs84.json", "Vandringsled 2", [0, 0, 255], "Vandringsleder"); // Blue color
-    addTrailLayer("Biking_walking_no_elevation/Etapp_13_wgs84.json", "Vandringsled 3", [0, 0, 255], "Vandringsleder"); // Blue color
-    addTrailLayer("Biking_walking_no_elevation/Etapp_14_wgs84.json", "Vandringsled 4", [255, 0, 0], "Vandringsleder"); // Red color
-    addTrailLayer("Biking_walking_no_elevation/Etapp_15_wgs84.json", "Vandringsled 5", [255, 0, 0], "Vandringsleder"); // Red color
-    addTrailLayer("Biking_walking_no_elevation/Etapp_16_wgs84.json", "Vandringsled 6", [0, 255, 0], "Vandringsleder"); // Green color
-    addTrailLayer("Biking_walking_no_elevation/Etapp_17_wgs84.json", "Vandringsled 7", [0, 255, 0], "Vandringsleder"); // Green color
-    // Add more trail layers as needed
+    
+    addTrailLayer("Biking_walking_no_elevation/Etapp_11_wgs84.json", "Vandringsled 1", [0, 0, 255], "Vandringsleder"); 
+    addTrailLayer("Biking_walking_no_elevation/Etapp_12_wgs84.json", "Vandringsled 2", [0, 0, 255], "Vandringsleder"); 
+    addTrailLayer("Biking_walking_no_elevation/Etapp_13_wgs84.json", "Vandringsled 3", [0, 0, 255], "Vandringsleder"); 
+    addTrailLayer("Biking_walking_no_elevation/Etapp_14_wgs84.json", "Vandringsled 4", [255, 0, 0], "Vandringsleder"); 
+    addTrailLayer("Biking_walking_no_elevation/Etapp_15_wgs84.json", "Vandringsled 5", [255, 0, 0], "Vandringsleder"); 
+    addTrailLayer("Biking_walking_no_elevation/Etapp_16_wgs84.json", "Vandringsled 6", [0, 255, 0], "Vandringsleder"); 
+    addTrailLayer("Biking_walking_no_elevation/Etapp_17_wgs84.json", "Vandringsled 7", [0, 255, 0], "Vandringsleder"); 
+    
 
-    // Function to toggle the visibility of trail layers based on type
+    
     function toggleTrailLayers(type, visible) {
         trailLayers[type].forEach(layer => {
             layer.visible = visible;
         });
     }
 
-    // Function to populate the second dropdown menu with trails based on the selected trail type
+    
     function populateTrailDropdown(trails) {
         const trailDropdown = document.getElementById("trailFilter");
-        trailDropdown.innerHTML = ""; // Clear previous options
+        trailDropdown.innerHTML = ""; 
 
         trails.forEach(trail => {
             const option = document.createElement("option");
@@ -98,22 +98,22 @@ require([
         });
     }
 
-    // Add event listener to the first dropdown menu for selecting trail type
+   
     document.getElementById("trailType").addEventListener('change', function() {
-        const selectedTrailType = this.value; // Get the selected trail type
-        const selectedTrails = trailLayers[selectedTrailType]; // Get trails for the selected type
+        const selectedTrailType = this.value; 
+        const selectedTrails = trailLayers[selectedTrailType]; 
         if (selectedTrails.length > 0) {
-            populateTrailDropdown(selectedTrails); // Populate the second dropdown menu
-            document.getElementById("trailFilterDiv").style.display = "block"; // Show the second dropdown menu
+            populateTrailDropdown(selectedTrails); 
+            document.getElementById("trailFilterDiv").style.display = "block"; 
         } else {
-            document.getElementById("trailFilterDiv").style.display = "none"; // Hide the second dropdown menu if no trails available
+            document.getElementById("trailFilterDiv").style.display = "none"; 
         }
     });
 
-    // Add event listener to the second dropdown menu for selecting specific trail
+    
     document.getElementById("trailFilter").addEventListener('change', function() {
-        const selectedTrailTitle = this.value; // Get the selected trail title
-        // Find and toggle the visibility of the selected trail
+        const selectedTrailTitle = this.value; 
+        
         Object.values(trailLayers).forEach(trails => {
             trails.forEach(trail => {
                 if (trail.title === selectedTrailTitle) {
@@ -125,13 +125,14 @@ require([
         });
     });
 
-    // Lägg till händelselyssnare för klickhändelse på kartvyn
+    
     view.on("click", function(event) {
-        const latitude = event.mapPoint.latitude.toFixed(6); // Avrunda till 6 decimaler
-        const longitude = event.mapPoint.longitude.toFixed(6); // Avrunda till 6 decimaler
+        const latitude = event.mapPoint.latitude.toFixed(6); 
+        const longitude = event.mapPoint.longitude.toFixed(6); 
         
         console.log("Latitude:", latitude, "Longitude:", longitude);
         
         document.getElementById("coordinatesDisplay").innerText = "Latitude: " + latitude + ", Longitude: " + longitude;
     });
 });
+
